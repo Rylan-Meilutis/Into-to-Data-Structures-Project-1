@@ -1,7 +1,10 @@
-//By Rylan Meilutis
-
 import java.util.Scanner;
 
+/**
+ * This class tests the Sequence class.
+ * @author Rylan Meilutis
+ * @author Vassily Dudkin
+ */
 public class SequenceTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
