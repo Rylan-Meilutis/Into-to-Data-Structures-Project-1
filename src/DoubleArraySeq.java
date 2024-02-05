@@ -66,7 +66,9 @@ public class DoubleArraySeq implements Cloneable
     **/
    public DoubleArraySeq( )
    {
-      // Implemented by student.
+      final int INITIAL_CAPACITY = 10;
+      manyItems = 0;
+      data = new double[INITIAL_CAPACITY];
    }
 
 
@@ -88,7 +90,11 @@ public class DoubleArraySeq implements Cloneable
     **/
    public DoubleArraySeq(int initialCapacity)
    {
-      // Implemented by student.
+      if (initialCapacity < 0)
+         throw new IllegalArgumentException
+         ("The initialCapacity is negative: " + initialCapacity);
+      data = new double[initialCapacity];
+      manyItems = 0;
    }
 
 
@@ -113,7 +119,23 @@ public class DoubleArraySeq implements Cloneable
     **/
    public void addAfter(double element)
    {
-      // Implemented by student.
+      if (manyItems == data.length)
+      {
+         ensureCapacity((manyItems + 1)*2);
+      }
+      if (currentIndex != 0)
+      {
+         data[currentIndex + 1] = element;
+         currentIndex++;
+         manyItems++;
+      }
+      else
+      {
+         data[manyItems] = element;
+         currentIndex = manyItems+;
+         manyItems++; 
+      }
+
    }
 
 
@@ -138,7 +160,23 @@ public class DoubleArraySeq implements Cloneable
     **/
    public void addBefore(double element)
    {
-      // Implemented by student.
+      if (manyItems == data.length)
+      {
+         ensureCapacity((manyItems + 1)*2);
+      }
+      if (currentIndex != 0)
+      {
+         data[currentIndex - 1] = element;
+         currentIndex--;
+         manyItems++;
+      }
+      else
+      {
+         data[0] = element;
+         currentIndex = 0;
+         manyItems++; 
+      }
+
    }
 
 
