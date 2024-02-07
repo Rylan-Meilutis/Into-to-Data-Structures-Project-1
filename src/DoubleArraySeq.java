@@ -104,11 +104,13 @@ public class DoubleArraySeq implements Cloneable {
      * arithmetic overflow.
      **/
     public void addAfter(double element) {
-        if (manyItems == data.length) {
+        if (manyItems + 1 == data.length) {
             ensureCapacity((manyItems + 1) * 2);
         }
         if (currentIndex != 0) {
+            double tmp = data[currentIndex];
             data[++currentIndex] = element;
+            data[currentIndex + 1] = tmp;
             manyItems++;
         }
         else {
@@ -134,15 +136,18 @@ public class DoubleArraySeq implements Cloneable {
      * arithmetic overflow.
      **/
     public void addBefore(double element) {
-        if (manyItems == data.length) {
+        if (manyItems + 1 == data.length) {
             ensureCapacity((manyItems + 1) * 2);
         }
-        if (currentIndex != 0) {
-            data[--currentIndex] = element;
+        for (int i = manyItems; i > currentIndex; i--) {
+            if (i == 0) {
+                break;
+            }
+            data[i] = data[i - 1];
         }
-        else {
-            data[0] = element;
-        }
+        data[currentIndex] = element;
+
+
         manyItems++;
     }
 
@@ -447,7 +452,7 @@ public class DoubleArraySeq implements Cloneable {
      * @throws IllegalArgumentException if n does not represent a valid location in the array
      */
     void setCurrent(int n) {
-        if (n < 0 || n > manyItems) {
+        if (n <= 0 || n > manyItems) {
             throw new IllegalArgumentException("n does not represent a valid location in the array");
         }
         currentIndex = n - 1;
