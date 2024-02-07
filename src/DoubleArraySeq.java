@@ -148,18 +148,18 @@ public class DoubleArraySeq implements Cloneable {
 
 
     /**
-     * Method that returns true if sequence is the same length and order and data. (The current element could be different)
-     * Use the proper format for the equals method shown in the book, we are overriding the equals method from the Object class.
+     * Method that returns true if sequence is the same length and order and data. (The current element could be
+     * different) Use the proper format for the equals method shown in the book, we are overriding the equals method
+     * from the Object class.
      */
     @Override
-    public boolean equals(Object dat) {
-        if ( dat instanceof DoubleArraySeq ) {
-            DoubleArraySeq other = (DoubleArraySeq) dat;
-            if ( manyItems != other.manyItems ) {
+    public boolean equals(Object obj) {
+        if (obj instanceof DoubleArraySeq other) {
+            if (manyItems != other.manyItems) {
                 return false;
             }
-            for ( int i = 0; i < manyItems; i++ ) {
-                if ( data[i] != other.data[i] ) {
+            for (int i = 0; i < manyItems; i++) {
+                if (data[i] != other.data[i]) {
                     return false;
                 }
             }
@@ -167,6 +167,7 @@ public class DoubleArraySeq implements Cloneable {
         }
         return false;
     }
+
     /**
      * A method to add a new element at the front of the sequence and make it the current element.
      *

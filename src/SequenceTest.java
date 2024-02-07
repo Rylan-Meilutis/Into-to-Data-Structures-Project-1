@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 /**
  * This class tests the Sequence class.
+ *
  * @author Rylan Meilutis
  * @author Vassily Dudkin
  */
@@ -81,7 +82,8 @@ public class SequenceTest {
                         System.out.println("Invalid choice");
                         break;
                 }
-            } catch (IllegalStateException | IllegalArgumentException e) {
+            }
+            catch (IllegalStateException | IllegalArgumentException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
