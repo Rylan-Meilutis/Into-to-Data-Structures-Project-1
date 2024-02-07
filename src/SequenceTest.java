@@ -76,7 +76,6 @@ public class SequenceTest {
                         break;
                     case 12:
                         System.out.println("Goodbye!");
-
                         break;
                     default:
                         System.out.println("Invalid choice");
