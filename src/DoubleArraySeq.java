@@ -57,9 +57,8 @@ public class DoubleArraySeq implements Cloneable {
      * efficiently (without needing more memory) until this capacity is reached.
      *
      * @param - none
-     *
+     * <dt><b>PreCondition: </b>This sequence is empty and has an initial capacity of 10.</dt>
      * @throws OutOfMemoryError Indicates insufficient memory for: new double[10].
-     * @postcondition This sequence is empty and has an initial capacity of 10.
      **/
     public DoubleArraySeq() {
         final int INITIAL_CAPACITY = 10;
@@ -73,11 +72,10 @@ public class DoubleArraySeq implements Cloneable {
      * efficiently (without needing more memory) until this capacity is reached.
      *
      * @param initialCapacity the initial capacity of this sequence
-     *
+     * <dt><b>Precondition: </b> InitialCapacity is non-negative.</dt>
+     * </dt></b>postcondition This sequence is empty and has the given initial capacity.</dt>
      * @throws IllegalArgumentException Indicates that initialCapacity is negative.
      * @throws OutOfMemoryError Indicates insufficient memory for: new double[initialCapacity].
-     * @precondition initialCapacity is non-negative.
-     * @postcondition This sequence is empty and has the given initial capacity.
      **/
     public DoubleArraySeq(int initialCapacity) {
         if (initialCapacity < 0) {
@@ -94,14 +92,13 @@ public class DoubleArraySeq implements Cloneable {
      * its current capacity, then the capacity is increased before adding the new element.
      *
      * @param element the new element that is being added
-     *
-     * @throws OutOfMemoryError Indicates insufficient memory for increasing the sequence's capacity.
-     * @postcondition A new copy of the element has been added to this sequence. If there was a current element, then
-     * the new element is placed after the current element. If there was no current element, then the new element is
-     * placed at the end of the sequence. In all cases, the new element becomes the new current element of this
-     * sequence.
+     * <dt><b>PostCondition: </b>A new copy of the element has been added to this sequence. If there was a current
+     * element, then the new element is placed after the current element. If there was no current element, then the new
+     * element is placed at the end of the sequence. In all cases, the new element becomes the new current element of
+     * this sequence.</dt>
      * @note An attempt to increase the capacity beyond Integer.MAX_VALUE will cause the sequence to fail with an
      * arithmetic overflow.
+     * @throws OutOfMemoryError Indicates insufficient memory for increasing the sequence's capacity.
      **/
     public void addAfter(double element) {
         if (manyItems + 1 == data.length) {
@@ -126,12 +123,12 @@ public class DoubleArraySeq implements Cloneable {
      * beyond its current capacity, then the capacity is increased before adding the new element.
      *
      * @param element the new element that is being added
+     * <dt><b>postcondition</b> A new copy of the element has been added to this sequence. If there was a current
+     * element, then the new element is placed before the current element. If there was no current element, then the new
+     * element is placed at the start of the sequence. In all cases, the new element becomes the new current element of
+     * this sequence.</dt>
      *
      * @throws OutOfMemoryError Indicates insufficient memory for increasing the sequence's capacity.
-     * @postcondition A new copy of the element has been added to this sequence. If there was a current element, then
-     * the new element is placed before the current element. If there was no current element, then the new element is
-     * placed at the start of the sequence. In all cases, the new element becomes the new current element of this
-     * sequence.
      * @note An attempt to increase the capacity beyond Integer.MAX_VALUE will cause the sequence to fail with an
      * arithmetic overflow.
      **/
@@ -160,6 +157,10 @@ public class DoubleArraySeq implements Cloneable {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof DoubleArraySeq other) {
+            if (currentIndex != other.currentIndex) {
+                return false;
+            }
+
             if (manyItems != other.manyItems) {
                 return false;
             }
@@ -234,11 +235,12 @@ public class DoubleArraySeq implements Cloneable {
      *
      * @param addend a sequence whose contents will be placed at the end of this sequence
      *
+     * <dt><b>PreCondition: </b> The parameter, addend, is not null. </dt>
+     * <dt><b>PostCondition: </b>> The elements from addend have been placed at the end of this sequence. The current
+     * element of this</dt> sequence remains where it was, and the addend is also unchanged.
+     *
      * @throws NullPointerException Indicates that addend is null.
      * @throws OutOfMemoryError Indicates insufficient memory to increase the size of this sequence.
-     * @precondition The parameter, addend, is not null.
-     * @postcondition The elements from addend have been placed at the end of this sequence. The current element of this
-     * sequence remains where it was, and the addend is also unchanged.
      * @note An attempt to increase the capacity beyond Integer.MAX_VALUE will cause an arithmetic overflow that will
      * cause the sequence to fail.
      **/
@@ -258,11 +260,12 @@ public class DoubleArraySeq implements Cloneable {
      *
      * @param - none
      *
+     * <dt><b>PreCondition: </b>isCurrent() returns true.</dt>
+     * <dt><b>PostCondition </b>If the current element was already the end element of this sequence (with nothing after
+     * it), then there is no longer any current element. Otherwise, the new element is the element immediately after the
+     * original current element.</dt>
+     *
      * @throws IllegalStateException Indicates that there is no current element, so advance may not be called.
-     * @precondition isCurrent() returns true.
-     * @postcondition If the current element was already the end element of this sequence (with nothing after it), then
-     * there is no longer any current element. Otherwise, the new element is the element immediately after the original
-     * current element.
      **/
     public void advance() {
         if (isCurrent()) {
@@ -298,6 +301,8 @@ public class DoubleArraySeq implements Cloneable {
                     ("This class does not implement Cloneable");
         }
 
+        answer.currentIndex = currentIndex;
+        answer.manyItems = manyItems;
         answer.data = data.clone();
 
         return answer;
@@ -311,10 +316,10 @@ public class DoubleArraySeq implements Cloneable {
      * @param s2 the second of two sequences
      *
      * @return a new sequence that has the elements of s1 followed by the elements of s2 (with no current element)
+     * <dt><b>precondition</b>  Neither s1 nor s2 is null.</dt>
      *
      * @throws NullPointerException Indicates that one of the arguments is null.
      * @throws OutOfMemoryError Indicates insufficient memory for the new sequence.
-     * @precondition Neither s1 nor s2 is null.
      * @note An attempt to create a sequence with a capacity beyond Integer.MAX_VALUE will cause an arithmetic overflow
      * that will cause the sequence to fail.
      **/
@@ -334,10 +339,10 @@ public class DoubleArraySeq implements Cloneable {
      * Change the current capacity of this sequence.
      *
      * @param minimumCapacity the new capacity for this sequence
+     * <dt><b>postcondition</b>  This sequence's capacity has been changed to at least minimumCapacity. If the capacity
+     * was already at or greater than minimumCapacity, then the capacity is left unchanged.</dt>
      *
      * @throws OutOfMemoryError Indicates insufficient memory for: new int[minimumCapacity].
-     * @postcondition This sequence's capacity has been changed to at least minimumCapacity. If the capacity was already
-     * at or greater than minimumCapacity, then the capacity is left unchanged.
      **/
     public void ensureCapacity(int minimumCapacity) {
         double[] biggerArray;
@@ -369,9 +374,9 @@ public class DoubleArraySeq implements Cloneable {
      * @param - none
      *
      * @return the current element of this sequence
+     * <dt><b>precondition</b>  isCurrent() returns true.</dt>
      *
      * @throws IllegalStateException Indicates that there is no current element, so getCurrent may not be called.
-     * @precondition isCurrent() returns true.
      **/
     public double getCurrent() {
         if (isCurrent()) {
@@ -400,10 +405,12 @@ public class DoubleArraySeq implements Cloneable {
      *
      * @param - none
      *
+     * <dt><b>precondition</b>  isCurrent() returns true.</dt>
+     * <dt><b>postcondition</b>  The current element has been removed from this sequence, and the following element (if
+     * there is one) is now the new current element. If there was no following element, then there is now no current
+     * element.</dt>
+     *
      * @throws IllegalStateException Indicates that there is no current element, so removeCurrent may not be called.
-     * @precondition isCurrent() returns true.
-     * @postcondition The current element has been removed from this sequence, and the following element (if there is
-     * one) is now the new current element. If there was no following element, then there is now no current element.
      **/
     public void removeCurrent() {
         if (isCurrent()) {
@@ -435,8 +442,8 @@ public class DoubleArraySeq implements Cloneable {
      *
      * @param - none
      *
-     * @postcondition The front element of this sequence is now the current element (but if this sequence has no
-     * elements at all, then there is no current element).
+     * <dt><b>postcondition</b>  The front element of this sequence is now the current element (but if this sequence
+     * has no elements at all, then there is no current element).</dt>
      **/
     public void start() {
         currentIndex = 0;
@@ -466,10 +473,13 @@ public class DoubleArraySeq implements Cloneable {
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < manyItems; i++) {
-            sb.append(data[i]);
-            sb.append(", ");
+        int current = currentIndex;
+        start();
+        while (currentIndex < manyItems) {
+            sb.append(getCurrent());
+            advance();
         }
+        currentIndex = current;
         return "[ " + sb + " ]";
     }
 
@@ -477,9 +487,9 @@ public class DoubleArraySeq implements Cloneable {
      * Reduce the current capacity of this sequence to its actual size (i.e., the number of elements it contains).
      *
      * @param - none
+     * <dt><b>postcondition</b>  This sequence's capacity has been changed to its current size.</dt>
      *
      * @throws OutOfMemoryError Indicates insufficient memory for altering the capacity.
-     * @postcondition This sequence's capacity has been changed to its current size.
      **/
     public void trimToSize() {
         double[] trimmedArray;
