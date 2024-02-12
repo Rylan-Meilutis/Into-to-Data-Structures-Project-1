@@ -477,10 +477,11 @@ public class DoubleArraySeq implements Cloneable {
         start();
         while (currentIndex < manyItems) {
             sb.append(getCurrent());
+            sb.append(" ");
             advance();
         }
         currentIndex = current;
-        return "[ " + sb + " ]";
+        return "[ " + sb + "]";
     }
 
     /**
