@@ -62,17 +62,17 @@ public class SequenceTest {
                         break;
                     case 9:
                         System.out.print("Enter the location to delete a number: ");
-                        sequence.setCurrent(scanner.nextInt());
-                        sequence.removeCurrent();
+                        sequence.setCurrent(scanner.nextInt()); // Set the current element to the location
+                        sequence.removeCurrent(); // Remove the current element
                         break;
                     case 10:
                         System.out.print("Enter the location to display the value: ");
-                        int location = scanner.nextInt();
-                        sequence.setCurrent(location);
+                        int location = scanner.nextInt(); // Store the location in a variable
+                        sequence.setCurrent(location); // Set the current element to the location
                         System.out.println("The value at location " + location + " is: " + sequence.getCurrent());
                         break;
                     case 11:
-                        sequence.setCurrent(sequence.size());
+                        sequence.setCurrent(sequence.size()); // Set the current element to the last element
                         System.out.println("The last element in the sequence is: " + sequence.getCurrent());
                         break;
                     case 12:

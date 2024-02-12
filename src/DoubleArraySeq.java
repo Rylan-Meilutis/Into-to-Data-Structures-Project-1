@@ -45,7 +45,7 @@ public class DoubleArraySeq implements Cloneable {
     //   2. For an empty sequence (with no elements), we do not care what is
     //      stored in any of data; for a non-empty sequence, the elements of the
     //      sequence are stored in data[0] through data[manyItems-1], and we
-    //      don�t care what�s in the rest of data.
+    //      don't care what's in the rest of data.
     //   3. If there is a current element, then it lies in data[currentIndex];
     //      if there is no current element, then currentIndex equals manyItems.
     private double[] data;
@@ -325,10 +325,10 @@ public class DoubleArraySeq implements Cloneable {
      **/
     public static DoubleArraySeq concatenation(DoubleArraySeq s1, DoubleArraySeq s2) {
         DoubleArraySeq newSequence = new DoubleArraySeq(s1.size() + s2.size());
-        for (int i = 0; i < s1.size(); i++) {
+        for (int i = 0; i < s1.size(); i++) { // Add all elements from s1 to newSequence
             newSequence.addAfter(s1.data[i]);
         }
-        for (int i = 0; i < s2.size(); i++) {
+        for (int i = 0; i < s2.size(); i++) { // Add all elements from s2 to newSequence
             newSequence.addAfter(s2.data[i]);
         }
         return newSequence;
@@ -414,7 +414,7 @@ public class DoubleArraySeq implements Cloneable {
      **/
     public void removeCurrent() {
         if (isCurrent()) {
-            for (int i = currentIndex; i < manyItems - 1; i++) {
+            for (int i = currentIndex; i < manyItems - 1; i++) { // Shift all elements to the left
                 data[i] = data[i + 1];
             }
             manyItems--;
@@ -460,7 +460,7 @@ public class DoubleArraySeq implements Cloneable {
      */
     void setCurrent(int n) {
         if (n <= 0 || n > manyItems) {
-            throw new IllegalArgumentException("n does not represent a valid location in the array");
+            throw new IllegalArgumentException(n + " is not a valid location in the array");
         }
         currentIndex = n - 1;
     }
@@ -475,9 +475,9 @@ public class DoubleArraySeq implements Cloneable {
         StringBuilder sb = new StringBuilder();
         int current = currentIndex;
         start();
-        while (currentIndex < manyItems) {
+        while (currentIndex < manyItems) { // Add all elements to the string
             sb.append(getCurrent());
-            sb.append(" ");
+            sb.append(" "); // Add a space between each element
             advance();
         }
         currentIndex = current;
